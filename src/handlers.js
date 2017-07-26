@@ -14,14 +14,14 @@ const loadAssets = (req, res) => {
   if (!accepted.includes(url)) {
     res.writeHead(400, 'Content-Type: text/html');
     res.end('<h1>Sorry, that is not a valid file name</h1>');
+    return;
   };
 
   const extension = url.split('.')[1];
   const extensionType = {
     html: 'text/html',
     css: 'text/css',
-    js: 'application/javascript',
-    ico: 'image/x-icon'
+    js: 'application/javascript'
   };
 
   const filePath = path.join(__dirname, '..', url);
@@ -40,4 +40,4 @@ const loadAssets = (req, res) => {
 //getCharacter(name) calls API call using request module, call renderCharacter() and call getComic()
 //3 responses: 200 and information in results, renderCharacter with results; 200 and empty results, renderCharacter with 'check your spelling'; other status codes renderCharacter 'sorry we're feeling sleepy - even superheroes need to rest'
 //getComic(id) calls API call using request module, call renderComic(): two cases 200 and not 200.
-module.export = {loadAssets};
+module.exports = {loadAssets};

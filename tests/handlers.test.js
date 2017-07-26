@@ -1,5 +1,6 @@
 const test = require('tape');
 const shot = require('shot');
+const router = require('../src/router.js');
 const handlers = require('../src/handlers.js');
 
 test('Initialise', (t) => {
@@ -9,8 +10,22 @@ test('Initialise', (t) => {
 })
 
 test('Load Assets', (t) => {
-  shot.inject(handlers, {method: 'get', url: '/'}, (res) => {
-    t.equal(res.statusCode, 200, 'should respond with status code of 200');
+  shot.inject(router, {method: 'get', url: '/'}, (res) => {
+    t.equal(res.statusCode, 200, 'home route should respond with status code of 200');
+    t.end();
+  })
+})
+
+test('Load Assets', (t) => {
+  shot.inject(router, {method: 'get', url: '/public/index.js'}, (res) => {
+    t.equal(res.statusCode, 200, 'index.html should respond with status code of 200');
+    t.end();
+  })
+})
+
+test('Load Assets', (t) => {
+  shot.inject(router, {method: 'get', url: '/public/../tryingtohackus.js'}, (res) => {
+    t.equal(res.statusCode, 400, 'invalid public URLs should respond with status code of 400');
     t.end();
   })
 })

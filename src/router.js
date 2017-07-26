@@ -1,15 +1,15 @@
 //router sends request to correct handler (3)
-const handler = require("./handler")
+const handlers = require('./handlers');
 
 function router(req, res) {
 
   if (req.url === '/' || req.url.includes('/public') ) {
 
-    handler.loadAssets(req, res);
+    handlers.loadAssets(req, res);
 
   } else if (req.url.includes('/search')) {
 
-    handler.getCharacter(req, res);
+    handlers.getCharacter(req, res);
 
   } else {
 
