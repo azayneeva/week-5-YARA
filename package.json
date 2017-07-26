@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/azayneeva/week-5-YARA#readme",
   "dependencies": {
+    "env2": "^2.2.0",
     "shot": "^3.4.2",
     "tap-spec": "^4.1.1",
     "tape": "^4.7.0"
