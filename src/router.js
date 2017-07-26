@@ -3,17 +3,13 @@ const handler = require("./handler")
 
 function router(req, res) {
 
-  if (req.url === '/') {
+  if (req.url === '/' || req.url.includes('/public') ) {
 
-    handler.handleHome(req, res);
-
-  } else if (req.url.includes('public')) {
-
-    handler.handleHTMLCSSJS(req, res);
+    handler.loadAssets(req, res);
 
   } else if (req.url.includes('/search')) {
 
-    handler.handleSearch(req, res);
+    handler.getCharacter(req, res);
 
   } else {
 
