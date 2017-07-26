@@ -1,7 +1,6 @@
 const test = require('tape');
 const shot = require('shot');
 const router = require('../src/router.js');
-const handlers = require('../src/handlers.js');
 
 test('Initialise', (t) => {
   let num = 2
