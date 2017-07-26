@@ -7,8 +7,8 @@
     "test": "tests"
   },
   "scripts": {
-    "test-handler": "node /tests/handlers.test.js | tap-spec",
-    "test-urlBuilder": "node /tests/urlBuilder.test.js | tap-spec"
+    "test-handlers": "node tests/handlers.test.js | tap-spec",
+    "test-urlBuilder": "node tests/urlBuilder.test.js | tap-spec"
   },
   "repository": {
     "type": "git",
