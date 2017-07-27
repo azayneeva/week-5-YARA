@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test-handlers": "node tests/handlers.test.js | tap-spec",
-    "test-urlBuilder": "node tests/urlBuilder.test.js | tap-spec"
+    "test-urlBuilder": "node tests/urlBuilder.test.js | tap-spec",
+    "devStart": "nodemon src/server.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
   "dependencies": {
     "crypto": "0.0.3",
     "env2": "^2.2.0",
+    "nodemon": "^1.11.0",
     "request": "^2.81.0",
     "shot": "^3.4.2",
     "tap-spec": "^4.1.1",
