@@ -16,6 +16,12 @@
 function getApi (url, callback) {
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
+    if (xhr.status == 404) {
+      var response = xhr.responseText
+      console.log(response)
+      document.getElementById("errorMessage").textContent = response
+      document.getElementById("errorMessage").style.display = 'block'
+    }
     if (xhr.readyState == 4 && xhr.status == 200) {
       var responseObj = JSON.parse(xhr.responseText);
       callback(responseObj);

@@ -73,17 +73,17 @@ const getCharacter = (req, res) => {
 
   request(url, function(err, response, body) {
     if (err) {
-      res.writeHead(500, 'application/json');
-      res.end('{"error":"Oooops"}')
+      res.writeHead(500, 'Content-Type: text/html');
+      res.end('<h1>Oooops!</h1>')
       return
     }
     const parsed = JSON.parse(body)
+    console.log("Im parsed data", parsed.data.results)
     const results = parsed.data.results
-    console.log(JSON.parse(body).data.results)
 
     if (!results.length) {
-      res.writeHead(404, 'Content-Type: application/json');
-      res.end('{"error":"No character"}')
+      res.writeHead(404, 'Content-Type: text/html');
+      res.end('Sorry, no hero')
       return
     }
 
