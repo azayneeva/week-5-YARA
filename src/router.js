@@ -1,5 +1,6 @@
 //router sends request to correct handler (3)
 const handlers = require('./handlers');
+const logic  = require('./logic');
 
 function router(req, res) {
 
@@ -9,7 +10,7 @@ function router(req, res) {
 
   } else if (req.url.includes('/search')) {
 
-    handlers.getCharacter(req, res);
+    logic.init(req, res);
 
   } else {
 
