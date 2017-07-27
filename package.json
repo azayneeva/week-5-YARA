@@ -24,6 +24,7 @@
   "dependencies": {
     "crypto": "0.0.3",
     "env2": "^2.2.0",
+    "https": "^1.0.0",
     "nodemon": "^1.11.0",
     "request": "^2.81.0",
     "shot": "^3.4.2",
