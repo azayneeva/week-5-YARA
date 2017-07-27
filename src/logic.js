@@ -60,7 +60,7 @@ var logicObj = {
         // response.on('end', () => {
         //   cb(null, rawData)
         if (err) {
-          cb(e);
+          cb(err);
         } else {
           cb(null,body);
         }
@@ -107,9 +107,8 @@ var logicObj = {
   },
 
 
-  comicProfile: function(url) {
-    request(url, function(err, response, body) {
-      if (err) {
+  comicProfile: function(error, data) {
+      if (error) {
         return
       }
       const parsed = JSON.parse(body)
@@ -127,7 +126,7 @@ var logicObj = {
       console.log('comicProfile has run - with results');
       return
 
-    })
+
   },
 
   // sendResponse: function (results){
