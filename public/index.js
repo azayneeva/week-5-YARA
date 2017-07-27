@@ -7,7 +7,7 @@
 
     var userInput = document.getElementById("characterInput").value;
 
-    const urlFrontend = "http://localhost:4000/" + "search/" + userInput;
+    const urlFrontend = "/search/" + userInput;
 
     getApi(urlFrontend, appendData404, appendData200)
   })
@@ -21,6 +21,7 @@ function getApi (url, callback1, callback2) {
       callback1(response);
     }
     if (xhr.readyState == 4 && xhr.status == 200) {
+      console.log(xhr.responseText);
       var responseObj = JSON.parse(xhr.responseText);
       callback2(responseObj);
       console.log(responseObj)
@@ -31,17 +32,17 @@ function getApi (url, callback1, callback2) {
 }
 
 function appendData200(responseObj) {
-  document.getElementById("results").style.display = 'block'
-  document.getElementById("characterName").textContent = responseObj[0].name
-  document.getElementById("characterDescription").textContent = responseObj[0].description
-  document.getElementById("characterImage").src = responseObj[0].thumbnail.path + '.' + responseObj[0].thumbnail.extension
+  document.getElementById("character").style.display = 'block'
+  document.getElementById("characterName").textContent = responseObj.character.name
+  document.getElementById("characterDescription").textContent = responseObj.character.description
+  document.getElementById("characterImage").src = responseObj.character.image
 
-  if (responseObj[1]) {
-    document.getElementById("comicResults").style.display = 'block'
-    document.getElementById("comicName").textContent = responseObj[1].name
-    document.getElementById("comicDate").textContent = responseObj[1].date
-    document.getElementById("comicDescription").textContent = responseObj[1].description
-    document.getElementById("comicImage").src = responseObj[1].thumbnail.path + '.' + responseObj[1].thumbnail.extension  
+  if (responseObj.comic.name.length > 0) {
+    document.getElementById("comics").style.display = 'block'
+    document.getElementById("comicName").textContent = responseObj.comic.name
+    document.getElementById("comicDate").textContent = responseObj.comic.date
+    document.getElementById("comicDescription").textContent = responseObj.comic.description
+    document.getElementById("comicImage").src = responseObj.comic.image
   }
 }
 

@@ -40,7 +40,7 @@ var logicObj = {
       const ts = Date.now()
       const hash = crypto.createHash('md5').update(ts + process.env.PRIV_KEY + process.env.API_KEY).digest('hex')
       const characterId = logicObj.resultsObj.character.id
-      const url = `${API_URL}/characters/${characterId}/comics?orderBy=-onsaleDateomic&apikey=${process.env.API_KEY}&ts=${ts}&hash=${hash}`
+      const url = `${API_URL}/characters/${characterId}/comics?orderBy=-onsaleDate&apikey=${process.env.API_KEY}&ts=${ts}&hash=${hash}`
       console.log('makeComicUrl has run');
       return url;
     },
@@ -108,13 +108,16 @@ var logicObj = {
 
 
   comicProfile: function(error, data) {
+    console.log('comicProfile has started')
       if (error) {
         return
       }
-      const parsed = JSON.parse(body)
+
+      const parsed = JSON.parse(data)
       const results = parsed.data.results[0]
 
-      if (!results.length) {
+
+      if (results.length === 0) {
         console.log('comicProfile has run - error');
         return
       }
@@ -124,6 +127,7 @@ var logicObj = {
       logicObj.resultsObj.comic.description = results.description;
       logicObj.resultsObj.comic.image = results.thumbnail.path + '.' + results.thumbnail.extension;
       console.log('comicProfile has run - with results');
+      console.log('resultsObj:', logicObj.resultsObj)
       return
 
 
