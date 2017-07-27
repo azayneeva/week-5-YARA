@@ -13,14 +13,14 @@ const loadAssets = (req, res) => {
   let accepted = ['/', '/public/index.html', '/public/style.css', '/public/index.js'];
   let url = req.url;
 
-  if (url === '/') {
-    url = '/public/index.html'
-  };
-
   if (!accepted.includes(url)) {
     res.writeHead(400, 'Content-Type: text/html');
     res.end('<h1>Sorry, that is not a valid file name</h1>');
     return;
+  };
+
+  if (url === '/') {
+    url = '/public/index.html'
   };
 
   const extension = url.split('.')[1];
