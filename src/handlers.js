@@ -78,12 +78,12 @@ const getCharacter = (req, res) => {
       return
     }
     const parsed = JSON.parse(body)
-    console.log("Im parsed data", parsed.data.results)
     const results = parsed.data.results
+    console.log("Im parsed data", results)
 
     if (!results.length) {
       res.writeHead(404, 'Content-Type: text/html');
-      res.end('Sorry, no hero')
+      res.end("Oops, seems this hero doesn't exist, please, try again!")
       return
     }
 
