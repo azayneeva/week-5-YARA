@@ -1,0 +1,66 @@
+body {
+  display: block;
+  background-color: blue;
+}
+header {
+  font-family: 'Anton', sans-serif;
+  background-color: red;
+  color: white;
+  text-align: center;
+  padding: 3vh;
+  font-size: 5vw;
+}
+
+.container {
+  width: 100vw;
+  max-width: 680px;
+  margin: 0 auto;
+  background-color: white;
+  height:100%;
+}
+
+section {
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+}
+img {
+  width: 40%;
+}
+
+#character--info {
+  width: 40%;
+}
+
+form {
+  text-align: center;
+  font-family: 'Anton', sans-serif;
+  font-size: 3vw;
+  margin-top: 3vh;
+  cursor: pointer;
+}
+
+input:focus {
+  background-color: #f0c062;
+}
+
+input[type="text"] {
+  font-size: 2vw;
+  border-color: black;
+  padding: 0.5vw;
+  padding-right: 0;
+  font-family: 'Fjalla One', sans-serif;
+  display: block;
+  width: 100%;
+  margin-bottom: 3vw;
+}
+
+input[type="submit"] {
+  font-size: 1vw;
+  background-color: black;
+  padding: 3vw 20vw 3vw 20vw;
+  /*margin-top: 5vh;*/
+  width: 100%;
+color: white;
+  font-family: 'Fjalla One', sans-serif;
+}
