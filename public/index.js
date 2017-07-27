@@ -41,7 +41,7 @@ function appendData200(responseObj) {
     document.getElementById("comicName").textContent = responseObj[1].name
     document.getElementById("comicDate").textContent = responseObj[1].date
     document.getElementById("comicDescription").textContent = responseObj[1].description
-    document.getElementById("comicImage").src = responseObj[1].thumbnail.path + '.' + responseObj[1].thumbnail.extension
+    document.getElementById("comicImage").src = responseObj[1].thumbnail.path + '.' + responseObj[1].thumbnail.extension  
   }
 }
 
