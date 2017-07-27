@@ -61,15 +61,15 @@ const loadAssets = (req, res) => {
 
 //-----------getCharacter -------------//
 
-const API_URL = "https://gateway.marvel.com/v1/public"
-const PRIV_KEY = "218c6b445a390ead9316822b7661a19b0d5adffc"
-const API_KEY = "7759bf69dd03ab99ee7d615925b09299"
+// const API_URL = "https://gateway.marvel.com/v1/public"
+// const PRIV_KEY = "218c6b445a390ead9316822b7661a19b0d5adffc"
+// const API_KEY = "7759bf69dd03ab99ee7d615925b09299"
 
 const getCharacter = (req, res) => {
-  const queryName = req.url.replace('/search/','')
-  const ts = Date.now()
-  const hash = crypto.createHash('md5').update(ts + PRIV_KEY + API_KEY).digest('hex')
-  const url = `${API_URL}/characters?name=${queryName}&apikey=${API_KEY}&ts=${ts}&hash=${hash}`
+  // const queryName = req.url.replace('/search/','')
+  // const ts = Date.now()
+  // const hash = crypto.createHash('md5').update(ts + PRIV_KEY + API_KEY).digest('hex')
+  // const url = `${API_URL}/characters?name=${queryName}&apikey=${API_KEY}&ts=${ts}&hash=${hash}`
 
   request(url, function(err, response, body) {
     if (err) {

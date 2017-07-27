@@ -22,9 +22,12 @@ var logicObj = {
 
   //change this
   makeComicUrl: function() {
-    var urlStart = 'https://api.tfl.gov.uk/Line/';
-    var urlEnd = '/Status?app_id=de9e1a2e&app_key=41bcfcc2d033bae16403b619c8ec1613';
-    return urlStart + logicObj.resultsObj.line + urlEnd;
+    const ts = Date.now()
+    const hash = crypto.createHash('md5').update(ts + process.env.PRIV_KEY + process.env.API_KEY).digest('hex')
+    const characterId = logicObj.resultsObj.character.id
+    const url = `${API_URL}/characters/${characterId}/comics?orderBy=-onsaleDateomic&apikey=${process.env.API_KEY}&ts=${ts}&hash=${hash}`
+    console.log(url);
+    return url;
   },
 
 
@@ -59,10 +62,26 @@ var logicObj = {
     })
   },
 
-  comicProfile: function(giphyData) {
-    var randomNum = Math.floor(Math.random()*30);
-    var gifSrc = giphyData.data[randomNum].images.fixed_height.url;
-    logicObj.resultsObj.url = gifSrc;
+  comicProfile: function(url) {
+    request(url, function(err, response, body) {
+      if (err) {
+        return
+      }
+      const parsed = JSON.parse(body)
+      const results = parsed.data.results[0]
+      console.log("Im parsed data", results)
+
+      if (!results.length) {
+        return
+      }
+
+      logicObj.resultsObj.comic.date = results.dates[0].date;
+      logicObj.resultsObj.comic.name = results.title;
+      logicObj.resultsObj.comic.description = results.description ;
+      logicObj.resultsObj.comic.image = results.thumbnail.path + '.' + results.thumbnail.extension;
+      return
+
+    })
   },
 
   sendResponse(resultsObj){
