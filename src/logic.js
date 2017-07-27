@@ -27,21 +27,36 @@ var logicObj = {
     return urlStart + logicObj.resultsObj.line + urlEnd;
   },
 
-  apiCall: function(url, cb) {
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState == 4 && xhr.status == 200) {
-        var data = JSON.parse(xhr.responseText);
-        cb(data);
-      }
-    };
-    xhr.open("GET", url, true);
-    xhr.send();
-  },
 
-  characterProfile: function(tflData) {
-    var lineStatus = tflData[0].lineStatuses[0].statusSeverityDescription;
-    logicObj.resultsObj.status = lineStatus;
+
+  characterProfile: function(url) {
+    request(url, function(err, response, body) {
+      if (err) {
+        logicObj.resultsObj.character.id = 1;
+        logicObj.resultsObj.character.name = 'Not found';
+        logicObj.resultsObj.character.description = 'Please try another one' ;
+        logicObj.resultsObj.character.image = 'https://media.giphy.com/media/nKN7E76a27Uek/giphy.gif';
+        return
+      }
+      const parsed = JSON.parse(body)
+      const results = parsed.data.results[0]
+      console.log("Im parsed data", results)
+
+      if (!results.length) {
+        logicObj.resultsObj.character.id = 1;
+        logicObj.resultsObj.character.name = 'Not found';
+        logicObj.resultsObj.character.description = 'Please try another one' ;
+        logicObj.resultsObj.character.image = 'https://media.giphy.com/media/nKN7E76a27Uek/giphy.gif';
+        return
+      }
+
+      logicObj.resultsObj.character.id = results.id;
+      logicObj.resultsObj.character.name = results.name;
+      logicObj.resultsObj.character.description = results.description ;
+      logicObj.resultsObj.character.image = results.thumbnail.path + '.' + results.thumbnail.extension;
+      return
+
+    })
   },
 
   comicProfile: function(giphyData) {
