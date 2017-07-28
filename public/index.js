@@ -17,14 +17,14 @@ function getApi (url, callback1, callback2) {
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
     if (xhr.readyState == 4 & xhr.status == 404) {
-      var response = xhr.responseText
-      callback1(response);
+      var responseObj = JSON.parse(xhr.responseText);
+      callback1(responseObj);
     }
     if (xhr.readyState == 4 && xhr.status == 200) {
+      console.log("im here")
       console.log(xhr.responseText);
       var responseObj = JSON.parse(xhr.responseText);
       callback2(responseObj);
-      console.log(responseObj)
     }
   }
   xhr.open("GET", url, true);
@@ -46,7 +46,10 @@ function appendData200(responseObj) {
   }
 }
 
-function appendData404(response) {
-  document.getElementById("errorMessage").textContent = response
+function appendData404(responseObj) {
+  console.log("show me response ", responseObj)
   document.getElementById("errorMessage").style.display = 'block'
+  document.getElementById("errorImage").src = responseObj.character.image;
+  document.getElementById("errorName").textContent = responseObj.character.name;
+  document.getElementById("errorDescription").textContent = responseObj.character.description
 }

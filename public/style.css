@@ -1,14 +1,26 @@
+html {
+  height: 100%;
+}
+
 body {
   display: block;
-  background-color: blue;
+  background-color: #1e4396;
+  height: 100%
 }
 header {
   font-family: 'Anton', sans-serif;
-  background-color: red;
+  background-color: #e23636;
   color: white;
   text-align: center;
   padding: 3vh;
   font-size: 5vw;
+}
+h3 {
+  font-family: 'Mada', sans-serif;
+  font-size: 1.8vh
+}
+label {
+  padding-bottom: 3vh;
 }
 
 .container {
@@ -16,7 +28,7 @@ header {
   max-width: 680px;
   margin: 0 auto;
   background-color: white;
-  height:100%;
+  min-height:100vh;
 }
 
 section {
@@ -25,42 +37,58 @@ section {
   flex-direction: row;
 }
 img {
-  width: 40%;
+  width: 45%;
+  float: left;
+  padding-right: 5%;
 }
 
-#character--info {
-  width: 40%;
+img#comicImage {
+  float: right;
+  padding-right: 0;
+  padding-left: 5%;
+}
+
+#comics {
+  overflow: hidden;
+}
+
+#character--info,
+#comics {
+  padding: 20px;
 }
 
 form {
   text-align: center;
   font-family: 'Anton', sans-serif;
-  font-size: 3vw;
-  margin-top: 3vh;
+  font-size: 4vh;
   cursor: pointer;
+  margin: 5vh auto;
 }
 
 input:focus {
-  background-color: #f0c062;
+  background-color: #e7cf6c;
 }
 
 input[type="text"] {
-  font-size: 2vw;
+  font-size: 2.5vh;
   border-color: black;
-  padding: 0.5vw;
+  padding: 1.5vh;
   padding-right: 0;
   font-family: 'Fjalla One', sans-serif;
   display: block;
   width: 100%;
-  margin-bottom: 3vw;
+  margin-bottom: 3vh;
+  margin-top: 2vh;
 }
 
 input[type="submit"] {
-  font-size: 1vw;
+  font-size: 2.5vh;
   background-color: black;
-  padding: 3vw 20vw 3vw 20vw;
-  /*margin-top: 5vh;*/
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  padding-right: 15vh;
+  padding-left: 15vh;
   width: 100%;
-color: white;
+  color: white;
   font-family: 'Fjalla One', sans-serif;
 }
