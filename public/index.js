@@ -41,8 +41,8 @@
   }
 
   function appendData404(responseObj) {
-    document.getElementById("errorMessage").style.display = 'block'
-    document.getElementById("errorImage").src = responseObj.character.image;
-    document.getElementById("errorName").textContent = responseObj.character.name;
-    document.getElementById("errorDescription").textContent = responseObj.character.description
+    document.getElementById("character").style.display = 'block'
+    document.getElementById("characterImage").src = responseObj.character.image;
+    document.getElementById("characterName").textContent = responseObj.character.name;
+    document.getElementById("characterDescription").textContent = responseObj.character.description
   }
