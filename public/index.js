@@ -3,7 +3,7 @@
 
     var userInput = document.getElementById("characterInput").value;
     if (userInput){
-    const urlFrontend = "/search/" + userInput;
+    var urlFrontend = "/search/" + userInput;
 
     getApi(urlFrontend, appendData404, appendData200)}
   })
