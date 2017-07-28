@@ -44,7 +44,7 @@ const logicObj = {
 
     apiCall: function(url, cb) {
       console.log("api call has started");
-      request(url, function(err, response, body) {
+      request(url, function(error, response, body) {
         // console.log('request started');
         // response.setEncoding('UTF-8');
         // let rawData = '';
@@ -57,8 +57,8 @@ const logicObj = {
         // response.on('end', () => {
         //   cb(null, rawData)
 
-        if (err) {
-          cb(err);
+        if (error) {
+          cb(error);
         } else {
           cb(null,body);
         }
@@ -70,19 +70,24 @@ const logicObj = {
       console.log('characterProfile has started');
 
       if (error) {
+        console.log('characterProfile has run - error');
         logicObj.resultsObj.character.id = 1;
         logicObj.resultsObj.character.name = 'Not found';
         logicObj.resultsObj.character.description = 'Please try another one';
         logicObj.resultsObj.character.image = 'https://media.giphy.com/media/nKN7E76a27Uek/giphy.gif';
-        console.log('characterProfile has run - error');
         return
       }
+      console.log("im here")
+      console.log("im data: ", JSON.parse(data).data.results)
+
 
       const parsed = JSON.parse(data);
 
+      const emptyResults = parsed.data.results
+
       const results = parsed.data.results[0];
 
-      if (results.length === 0) {
+      if (emptyResults.length === 0) {
         logicObj.resultsObj.character.id = 1;
         logicObj.resultsObj.character.name = 'Not found';
         logicObj.resultsObj.character.description = 'Please try another one';
@@ -108,12 +113,14 @@ const logicObj = {
       if (error) {
         return
       }
-
+console.log("comicProfile: im here")
       const parsed = JSON.parse(data)
+      console.log("im comic parsed: ", parsed.data.results)
       const results = parsed.data.results[0]
+      const emptyComicResults = parsed.data.results
 
 
-      if (results.length === 0) {
+      if (emptyComicResults.length === 0) {
         console.log('comicProfile has run - error');
         return
       }
@@ -160,7 +167,7 @@ const logicObj = {
 
       var status = 200
       if (logicObj.resultsObj.name === 'Not found') {
-        status=400
+        status=404
       }
 
       res.writeHead(status, 'Content-Type: application/json');
