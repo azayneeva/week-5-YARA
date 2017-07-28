@@ -163,15 +163,19 @@ console.log("comicProfile: im here")
     } else {
       // logicObj.sendResponse(logicObj.resultsObj);
       console.log('the waterfall else case has called')
+      console.log("what is my name: ", logicObj.resultsObj.character.name)
       const stringifyData = JSON.stringify(logicObj.resultsObj);
 
       var status = 200
-      if (logicObj.resultsObj.name === 'Not found') {
+      if (logicObj.resultsObj.character.name === 'Not found') {
+        console.log("Do i reach this place?")
         status=404
       }
 
       res.writeHead(status, 'Content-Type: application/json');
+      console.log("what is my status ", status)
       res.end(stringifyData);
+      console.log("what do i send ", stringifyData)
     }
   },
 
