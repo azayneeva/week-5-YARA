@@ -47,6 +47,9 @@ img#comicImage {
   padding-right: 0;
   padding-left: 5%;
 }
+#character {
+  overflow: hidden;
+}
 
 #comics {
   overflow: hidden;

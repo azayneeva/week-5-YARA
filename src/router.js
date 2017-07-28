@@ -1,4 +1,3 @@
-//router sends request to correct handler (3)
 const handlers = require('./handlers');
 const logic  = require('./logic');
 

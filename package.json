@@ -7,8 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test-handlers": "node tests/handlers.test.js | tap-spec",
-    "test-urlBuilder": "node tests/urlBuilder.test.js | tap-spec",
+    "test": "node tests/handlers.test.js | tap-spec",
     "start": "nodemon src/server.js"
   },
   "repository": {
