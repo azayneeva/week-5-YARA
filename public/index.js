@@ -1,7 +1,5 @@
 //event listener to get the name -> make call to router.js
 
-//render DOM functions (2) renderComic() and renderCharacter()
-
   document.getElementById("searchForm").addEventListener("submit", function(event) {
     event.preventDefault();
 
@@ -37,6 +35,7 @@ function appendData200(responseObj) {
   document.getElementById("characterDescription").textContent = responseObj.character.description
   document.getElementById("characterImage").src = responseObj.character.image
 
+//if comic is available show information on comic
   if (responseObj.comic.name.length > 0) {
     document.getElementById("comics").style.display = 'block'
     document.getElementById("comicName").textContent = responseObj.comic.name
