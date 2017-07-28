@@ -1,12 +1,14 @@
 const handlers = require('./handlers');
 const request = require('request');
 const crypto = require('crypto');
-const env = require('env2')('.env');
+// const env = require('env2')('.env');
 const https = require('https');
+
 
 const API_URL = "https://gateway.marvel.com/v1/public"
 
-const logicObj = {
+
+var logicObj = {
 
     resultsObj: {
       character: {
@@ -23,6 +25,7 @@ const logicObj = {
       }
     },
 
+
     makeCharacterUrl: function(req) {
       const queryName = req.url.replace('/search/', '')
       const ts = Date.now()
@@ -33,7 +36,7 @@ const logicObj = {
     },
 
     //change this
-    makeComicUrl: function() {
+    makeComicUrl: function(req) {
       const ts = Date.now()
       const hash = crypto.createHash('md5').update(ts + process.env.PRIV_KEY + process.env.API_KEY).digest('hex')
       const characterId = logicObj.resultsObj.character.id
@@ -44,7 +47,7 @@ const logicObj = {
 
     apiCall: function(url, cb) {
       console.log("api call has started");
-      request(url, function(error, response, body) {
+      request(url, function(err, response, body) {
         // console.log('request started');
         // response.setEncoding('UTF-8');
         // let rawData = '';
@@ -56,9 +59,8 @@ const logicObj = {
         // })
         // response.on('end', () => {
         //   cb(null, rawData)
-
-        if (error) {
-          cb(error);
+        if (err) {
+          cb(err);
         } else {
           cb(null,body);
         }
@@ -70,57 +72,52 @@ const logicObj = {
       console.log('characterProfile has started');
 
       if (error) {
+        logicObj.resultsObj.character.id = 1;
+        logicObj.resultsObj.character.name = 'Not found';
+        logicObj.resultsObj.character.description = 'Please try another one';
+        logicObj.resultsObj.character.image = 'https://media.giphy.com/media/nKN7E76a27Uek/giphy.gif';
         console.log('characterProfile has run - error');
-        logicObj.resultsObj.character.id = 1;
-        logicObj.resultsObj.character.name = 'Not found';
-        logicObj.resultsObj.character.description = 'Please try another one';
-        logicObj.resultsObj.character.image = 'https://media.giphy.com/media/nKN7E76a27Uek/giphy.gif';
         return
-      }
-      console.log("im here")
-      console.log("im data: ", JSON.parse(data).data.results)
+      };
 
 
-      const parsed = JSON.parse(data);
 
-      const emptyResults = parsed.data.results
+    const parsed = JSON.parse(data);
 
-      const results = parsed.data.results[0];
+    const results = parsed.data.results[0];
 
-      if (emptyResults.length === 0) {
-        logicObj.resultsObj.character.id = 1;
-        logicObj.resultsObj.character.name = 'Not found';
-        logicObj.resultsObj.character.description = 'Please try another one';
-        logicObj.resultsObj.character.image = 'https://media.giphy.com/media/nKN7E76a27Uek/giphy.gif';
-        console.log('characterProfile has run - no results');
-        return
-      }
-
-      logicObj.resultsObj.character.id = results.id;
-      console.log('LOGIC THING' , logicObj.resultsObj.character);
-      logicObj.resultsObj.character.name = results.name;
-      logicObj.resultsObj.character.description = results.description;
-      logicObj.resultsObj.character.image = results.thumbnail.path + '.' + results.thumbnail.extension;
-      console.log('characterProfile has run - results');
+    if (results.length === 0) {
+      logicObj.resultsObj.character.id = 1;
+      logicObj.resultsObj.character.name = 'Not found';
+      logicObj.resultsObj.character.description = 'Please try another one';
+      logicObj.resultsObj.character.image = 'https://media.giphy.com/media/nKN7E76a27Uek/giphy.gif';
+      console.log('characterProfile has run - no results');
       return
+    }
+
+    logicObj.resultsObj.character.id = results.id;
+    console.log('LOGIC THING' , logicObj.resultsObj.character);
+    logicObj.resultsObj.character.name = results.name;
+    logicObj.resultsObj.character.description = results.description;
+    logicObj.resultsObj.character.image = results.thumbnail.path + '.' + results.thumbnail.extension;
+    console.log('characterProfile has run - results');
+    return
 
 
-    },
+  },
 
 
-    comicProfile: function(error, data) {
+  comicProfile: function(error, data) {
     console.log('comicProfile has started')
       if (error) {
         return
       }
-console.log("comicProfile: im here")
+
       const parsed = JSON.parse(data)
-      console.log("im comic parsed: ", parsed.data.results)
       const results = parsed.data.results[0]
-      const emptyComicResults = parsed.data.results
 
 
-      if (emptyComicResults.length === 0) {
+      if (results.length === 0) {
         console.log('comicProfile has run - error');
         return
       }
@@ -136,17 +133,18 @@ console.log("comicProfile: im here")
 
   },
 
-    // sendResponse: function (results){
-    //   const stringifyData = JSON.stringify(results) ;
-    //   res.writeHead(200,'Content-Type: application/json');
-    //   res.end(stringifyData);
-    // },
+  // sendResponse: function (results){
+  //   const stringifyData = JSON.stringify(results) ;
+  //   res.writeHead(200,'Content-Type: application/json');
+  //   res.end(stringifyData);
+  // },
 
-    waterfall: function(urlsArray, tasksArray, req, res) {
+  waterfall: function(urlsArray, tasksArray, req, res) {
     if (tasksArray.length > 0) {
 
       console.log('a waterfall round has started');
       var url = urlsArray[0](req);
+      console.log('url: ', url);
       var remainingUrls = urlsArray.slice(1);
       var task = tasksArray[0];
       var remainingTasks = tasksArray.slice(1);
@@ -163,30 +161,21 @@ console.log("comicProfile: im here")
     } else {
       // logicObj.sendResponse(logicObj.resultsObj);
       console.log('the waterfall else case has called')
-      console.log("what is my name: ", logicObj.resultsObj.character.name)
       const stringifyData = JSON.stringify(logicObj.resultsObj);
-
-      var status = 200
-      if (logicObj.resultsObj.character.name === 'Not found') {
-        console.log("Do i reach this place?")
-        status=404
-      }
-
-      res.writeHead(status, 'Content-Type: application/json');
-      console.log("what is my status ", status)
+      res.writeHead(200, 'Content-Type: application/json');
       res.end(stringifyData);
-      console.log("what do i send ", stringifyData)
     }
   },
 
-    // init: function(req, res) {
-    //
-    //     logicObj.waterfall( [logicObj.makeCharacterUrl(req), logicObj.makeComicUrl()], [logicObj.characterProfile, logicObj.comicProfile], logicObj.sendResponse);
-    // }
+  // init: function(req, res) {
+  //
+  //     logicObj.waterfall( [logicObj.makeCharacterUrl(req), logicObj.makeComicUrl()], [logicObj.characterProfile, logicObj.comicProfile], logicObj.sendResponse);
+  // }
 
-    init: function(req, res) {
-      logicObj.waterfall([logicObj.makeCharacterUrl, logicObj.makeComicUrl], [logicObj.characterProfile, logicObj.comicProfile], req, res);
-    }
+  init: function(req, res) {
+
+    logicObj.waterfall([logicObj.makeCharacterUrl, logicObj.makeComicUrl], [logicObj.characterProfile, logicObj.comicProfile], req, res);
+  }
 
 }
 
